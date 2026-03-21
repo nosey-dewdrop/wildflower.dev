@@ -23,3 +23,10 @@
 - ambient sounds during focus sessions
 - weather effects: wind sway, falling petals, morning dew, fireflies at night
 - spotify integration worth exploring
+- tree = goal system: plant a tree, attach a goal note (like a4 paper hanging on it), tree grows with focus time, tree wilts if goal is abandoned
+- flowers earned through focus sessions: timer grows a flower, when done you earn it and can place it in your garden
+- maybe: garden zones with fences for specific goals (e.g. "math 102" section with all flowers earned from that goal)
+- garden as an effort museum: visual showcase of what you focused on and how much
+- timer screen: living garden scene with clouds moving, wind blowing, grass swaying, flower grows from seed in real time
+- farmville/farmerama style garden: user places flowers, trees, decorations freely, drag and drop
+- garden should be huge: 3-4 pages scrollable, like a real world to explore and decorate
