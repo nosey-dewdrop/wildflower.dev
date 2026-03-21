@@ -29,17 +29,17 @@ struct PixelButton: View {
 
     var body: some View {
         Button(action: action) {
-            ZStack {
-                Image(isDestructive ? "button_red" : "button_green")
-                    .resizable()
-                    .interpolation(.none)
-                    .frame(height: 48)
-
-                Text(title)
-                    .font(.pixelBold(14))
-                    .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.5), radius: 0, x: 1, y: 1)
-            }
+            Text(title)
+                .font(.pixelBold(14))
+                .foregroundColor(.white)
+                .shadow(color: .black.opacity(0.5), radius: 0, x: 1, y: 1)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .background {
+                    Image(isDestructive ? "button_red" : "button_green")
+                        .resizable()
+                        .interpolation(.none)
+                }
         }
     }
 }

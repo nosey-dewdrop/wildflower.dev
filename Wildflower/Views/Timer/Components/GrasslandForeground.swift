@@ -1,45 +1,34 @@
 import SwiftUI
 
-struct GrasslandForeground: View {
-    @State private var swayOffset: CGFloat = 0
+// Fence layer - goes IN FRONT of trees
+struct FenceForeground: View {
+    let groundY: CGFloat
 
     var body: some View {
         GeometryReader { geo in
-            ZStack(alignment: .bottom) {
-                // Grass strip
-                Image("timer_grass_fg")
-                    .resizable()
-                    .interpolation(.none)
-                    .scaledToFill()
-                    .frame(width: geo.size.width + 20, height: geo.size.height * 0.14)
-                    .offset(x: swayOffset)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-
-                // Fence on the left
+            let w = geo.size.width
+            ZStack {
+                // Left pair
                 Image("timer_fence")
-                    .resizable()
-                    .interpolation(.none)
-                    .scaledToFit()
-                    .frame(width: 80, height: 60)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                    .offset(x: 16, y: -geo.size.height * 0.10)
+                    .resizable().interpolation(.none).scaledToFit()
+                    .frame(width: 110, height: 75)
+                    .position(x: 25, y: groundY + 20)
 
-                // Bush on the right
-                Image("timer_bush_berry")
-                    .resizable()
-                    .interpolation(.none)
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                    .offset(x: -20, y: -geo.size.height * 0.09)
-            }
-        }
-        .onAppear {
-            withAnimation(
-                .easeInOut(duration: 6)
-                .repeatForever(autoreverses: true)
-            ) {
-                swayOffset = 4
+                Image("timer_fence")
+                    .resizable().interpolation(.none).scaledToFit()
+                    .frame(width: 110, height: 75)
+                    .position(x: 115, y: groundY + 20)
+
+                // Right pair
+                Image("timer_fence")
+                    .resizable().interpolation(.none).scaledToFit()
+                    .frame(width: 110, height: 75)
+                    .position(x: w - 115, y: groundY + 20)
+
+                Image("timer_fence")
+                    .resizable().interpolation(.none).scaledToFit()
+                    .frame(width: 110, height: 75)
+                    .position(x: w - 25, y: groundY + 20)
             }
         }
         .allowsHitTesting(false)

@@ -1,31 +1,37 @@
 import SwiftUI
 
 struct ParallaxHills: View {
+    let groundY: CGFloat
+
     @State private var farOffset: CGFloat = 0
     @State private var nearOffset: CGFloat = 0
 
     var body: some View {
         GeometryReader { geo in
-            ZStack(alignment: .bottom) {
-                // Far hills - subtle sway
+            ZStack {
+                // Far hills - sits behind the ground, creates natural horizon
                 Image("timer_hills_far")
                     .resizable()
                     .interpolation(.none)
                     .scaledToFill()
-                    .frame(width: geo.size.width + 40, height: geo.size.height * 0.18)
+                    .frame(width: geo.size.width + 60, height: geo.size.height * 0.22)
                     .offset(x: farOffset)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                    .offset(y: -geo.size.height * 0.22)
+                    .position(
+                        x: geo.size.width / 2,
+                        y: groundY - geo.size.height * 0.06
+                    )
 
-                // Near hills - slightly more sway
+                // Near hills - overlaps ground line for smooth transition
                 Image("timer_hills_near")
                     .resizable()
                     .interpolation(.none)
                     .scaledToFill()
-                    .frame(width: geo.size.width + 30, height: geo.size.height * 0.20)
+                    .frame(width: geo.size.width + 40, height: geo.size.height * 0.18)
                     .offset(x: nearOffset)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                    .offset(y: -geo.size.height * 0.10)
+                    .position(
+                        x: geo.size.width / 2,
+                        y: groundY + geo.size.height * 0.02
+                    )
             }
         }
         .onAppear {

@@ -12,12 +12,10 @@ struct TimerView: View {
     @State private var showAddGoal = false
 
     private let flowerStages = [
-        "daisy_1_seed",
-        "daisy_2_sprout",
-        "daisy_3_bud",
-        "daisy_4_blooming",
-        "daisy_5_full_bloom"
+        "daisy_1_seed", "daisy_2_sprout", "daisy_3_bud",
+        "daisy_4_blooming", "daisy_5_full_bloom"
     ]
+
 
     private var stageForTime: Int {
         switch timeElapsed {
@@ -29,28 +27,36 @@ struct TimerView: View {
         }
     }
 
-    private var coinsEarned: Int {
-        timeElapsed / 60
-    }
+    private var coinsEarned: Int { timeElapsed / 60 }
 
     private var formattedTime: String {
-        let minutes = timeElapsed / 60
-        let seconds = timeElapsed % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        String(format: "%02d:%02d", timeElapsed / 60, timeElapsed % 60)
     }
 
     var body: some View {
-        ZStack {
-            // Living scene background
-            TimerSceneView()
+        GeometryReader { geo in
+            let w = geo.size.width
+            let h = geo.size.height
 
-            VStack(spacing: 0) {
+            ZStack {
+                // Living scene
+                TimerSceneView()
+
+                // Flower - scale 1.2, on ground, centered
+                Image(flowerStages[stageForTime])
+                    .resizable()
+                    .interpolation(.none)
+                    .scaledToFit()
+                    .frame(width: 180, height: 180)
+                    .scaleEffect(1.2)
+                    .animation(.spring(response: 0.6), value: stageForTime)
+                    .position(x: w / 2, y: h * 0.655)
+
+                // Top bar
                 HStack {
                     CoinDisplay(amount: coinsEarned)
                     Spacer()
-                    Button {
-                        showAddGoal = true
-                    } label: {
+                    Button { showAddGoal = true } label: {
                         Text("+")
                             .font(.pixelBold(22))
                             .foregroundColor(.white)
@@ -58,41 +64,20 @@ struct TimerView: View {
                     }
                 }
                 .padding(.horizontal)
-                .padding(.top, 8)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .padding(.top, 48)
 
-                Spacer()
+                // Timer + Start button - TOGETHER in sky area
+                VStack(spacing: 12) {
+                    Text(formattedTime)
+                        .font(.pixelBold(44))
+                        .foregroundColor(.white)
+                        .shadow(color: .black.opacity(0.6), radius: 4, x: 2, y: 2)
+                        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 0)
+                        .scaleEffect(1.4)
 
-                Text(formattedTime)
-                    .font(.pixelBold(22))
-                    .foregroundColor(.white)
-                    .shadow(color: .black, radius: 2, x: 1, y: 1)
-
-                Spacer()
-
-                ZStack(alignment: .bottom) {
-                    Image("timer_soil_plot")
-                        .resizable()
-                        .interpolation(.none)
-                        .scaledToFit()
-                        .frame(width: 48, height: 24)
-
-                    Image(flowerStages[stageForTime])
-                        .resizable()
-                        .interpolation(.none)
-                        .scaledToFit()
-                        .frame(width: 56, height: 56)
-                        .offset(y: -14)
-                        .animation(.spring(response: 0.6), value: stageForTime)
-                }
-                .padding(.bottom, 16)
-
-                if !goals.isEmpty && selectedGoal == nil && !isRunning {
-                    VStack(spacing: 8) {
-                        Text("pick a goal")
-                            .font(.pixel(13))
-                            .foregroundColor(.white)
-                            .shadow(color: .black, radius: 2, x: 1, y: 1)
-
+                    // Goal selection
+                    if !goals.isEmpty && selectedGoal == nil && !isRunning {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
                                 ForEach(goals) { goal in
@@ -100,11 +85,8 @@ struct TimerView: View {
                                         selectedGoal = goal
                                     } label: {
                                         VStack(spacing: 6) {
-                                            Text(goal.emoji)
-                                                .font(.system(size: 22))
-                                            Text(goal.name)
-                                                .font(.pixel(10))
-                                                .foregroundColor(.white)
+                                            Text(goal.emoji).font(.system(size: 22))
+                                            Text(goal.name).font(.pixel(10)).foregroundColor(.white)
                                         }
                                         .padding(10)
                                         .background(Color.black.opacity(0.4))
@@ -114,12 +96,8 @@ struct TimerView: View {
                             }
                             .padding(.horizontal)
                         }
-                    }
-                } else if goals.isEmpty && !isRunning {
-                    Button {
-                        showAddGoal = true
-                    } label: {
-                        VStack(spacing: 6) {
+                    } else if goals.isEmpty && !isRunning {
+                        VStack(spacing: 4) {
                             Text("no goals yet")
                                 .font(.pixel(13))
                                 .foregroundColor(.white)
@@ -130,47 +108,35 @@ struct TimerView: View {
                                 .shadow(color: .black, radius: 2, x: 1, y: 1)
                         }
                     }
-                }
 
-                if let goal = selectedGoal, !isRunning {
-                    HStack(spacing: 6) {
-                        Text(goal.emoji)
-                            .font(.system(size: 16))
-                        Text(goal.name)
-                            .font(.pixel(12))
-                            .foregroundColor(.white)
+                    if let goal = selectedGoal, !isRunning {
+                        HStack(spacing: 6) {
+                            Text(goal.emoji).font(.system(size: 16))
+                            Text(goal.name).font(.pixel(12)).foregroundColor(.white)
+                        }
+                        .padding(.horizontal, 12).padding(.vertical, 8)
+                        .background(Color.black.opacity(0.4))
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
                     }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(Color.black.opacity(0.4))
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                }
 
-                if isRunning {
-                    PixelButton("Stop", isDestructive: true) {
-                        stopTimer()
+                    // Start/Stop - right below timer
+                    if isRunning {
+                        PixelButton("Stop", isDestructive: true) { stopTimer() }
+                    } else {
+                        PixelButton("Start") { startTimer() }
                     }
-                    .frame(width: 180)
-                } else {
-                    PixelButton("Start") {
-                        startTimer()
-                    }
-                    .frame(width: 180)
                 }
-
-                Spacer().frame(height: 12)
+                .position(x: w / 2, y: h * 0.47)
             }
-            .padding()
         }
+        .ignoresSafeArea()
         .sheet(isPresented: $showAddGoal) {
             AddGoalView()
         }
     }
 
     private func startTimer() {
-        if selectedGoal == nil && !goals.isEmpty {
-            return
-        }
+        if selectedGoal == nil && !goals.isEmpty { return }
         isRunning = true
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             timeElapsed += 1
@@ -181,12 +147,10 @@ struct TimerView: View {
         isRunning = false
         timer?.invalidate()
         timer = nil
-
         if let goal = selectedGoal, timeElapsed > 0 {
             let session = Session(goal: goal, duration: timeElapsed)
             modelContext.insert(session)
         }
-
         timeElapsed = 0
         selectedGoal = nil
     }

@@ -6,46 +6,29 @@ struct GentleSun: View {
 
     var body: some View {
         ZStack {
-            // Outer warm glow
+            // Outer warm glow (pixel-friendly soft aura)
             Circle()
                 .fill(
                     RadialGradient(
                         colors: [
-                            Color(hex: "FFF4B8").opacity(0.4),
-                            Color(hex: "FFE566").opacity(0.15),
+                            Color(hex: "FFF4B8").opacity(0.5),
+                            Color(hex: "FFE566").opacity(0.2),
                             Color.clear
                         ],
                         center: .center,
-                        startRadius: 10,
-                        endRadius: glowPulse ? 55 : 45
+                        startRadius: 20,
+                        endRadius: glowPulse ? 80 : 65
                     )
                 )
-                .frame(width: 110, height: 110)
+                .frame(width: 160, height: 160)
 
-            // Inner bright core
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            Color(hex: "FFFDE0"),
-                            Color(hex: "FFE566"),
-                            Color(hex: "FFD036")
-                        ],
-                        center: .center,
-                        startRadius: 2,
-                        endRadius: 18
-                    )
-                )
-                .frame(width: 36, height: 36)
-
-            // Subtle ray lines
-            ForEach(0..<8, id: \.self) { i in
-                Capsule()
-                    .fill(Color(hex: "FFE566").opacity(0.3))
-                    .frame(width: 2, height: 12)
-                    .offset(y: -28)
-                    .rotationEffect(.degrees(Double(i) * 45 + rayRotation))
-            }
+            // Pixel art sun sprite
+            Image("timer_sun_pixel")
+                .resizable()
+                .interpolation(.none)
+                .scaledToFit()
+                .frame(width: 72, height: 72)
+                .rotationEffect(.degrees(rayRotation))
         }
         .onAppear {
             withAnimation(
@@ -55,7 +38,7 @@ struct GentleSun: View {
                 glowPulse = true
             }
             withAnimation(
-                .linear(duration: 30)
+                .linear(duration: 60)
                 .repeatForever(autoreverses: false)
             ) {
                 rayRotation = 360
