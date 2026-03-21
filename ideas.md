@@ -30,3 +30,5 @@
 - timer screen: living garden scene with clouds moving, wind blowing, grass swaying, flower grows from seed in real time
 - farmville/farmerama style garden: user places flowers, trees, decorations freely, drag and drop
 - garden should be huge: 3-4 pages scrollable, like a real world to explore and decorate
+- drag and drop system: reusable across garden, house, and timer scene for placing items freely
+- palette toolbar for selecting and placing multiple copies of items (trees, fences, bushes, flowers)
