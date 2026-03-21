@@ -32,3 +32,6 @@
 - garden should be huge: 3-4 pages scrollable, like a real world to explore and decorate
 - drag and drop system: reusable across garden, house, and timer scene for placing items freely
 - palette toolbar for selecting and placing multiple copies of items (trees, fences, bushes, flowers)
+- goal = planting in garden: creating a goal plants a tree/flower in your garden, focus time makes it grow
+- stardew valley style garden management: water, tend, harvest, arrange
+- garden is the core loop, not just a reward screen
