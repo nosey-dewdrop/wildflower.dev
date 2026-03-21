@@ -10,8 +10,6 @@ struct TimerView: View {
     @State private var isRunning = false
     @State private var timer: Timer?
     @State private var showAddGoal = false
-    @State private var cloudOffset1: CGFloat = 0
-    @State private var cloudOffset2: CGFloat = 200
 
     private let flowerStages = [
         "daisy_1_seed",
@@ -43,43 +41,10 @@ struct TimerView: View {
 
     var body: some View {
         ZStack {
-            // Sky background
-            Image("timer_sky")
-                .resizable()
-                .interpolation(.none)
-                .scaledToFill()
-                .ignoresSafeArea()
+            // Living scene background
+            TimerSceneView()
 
-            // Animated clouds
-            GeometryReader { geo in
-                Image("cloud_1")
-                    .resizable()
-                    .interpolation(.none)
-                    .frame(width: 128, height: 64)
-                    .offset(x: cloudOffset1, y: 60)
-
-                Image("cloud_2")
-                    .resizable()
-                    .interpolation(.none)
-                    .frame(width: 160, height: 80)
-                    .offset(x: cloudOffset2, y: 120)
-            }
-
-            // Grass ground at bottom
-            VStack {
-                Spacer()
-                Image("timer_grass")
-                    .resizable()
-                    .interpolation(.none)
-                    .scaledToFill()
-                    .frame(height: 200)
-                    .clipped()
-            }
-            .ignoresSafeArea(edges: .bottom)
-
-            // Main content
-            VStack(spacing: 16) {
-                // Top bar with coin display
+            VStack(spacing: 0) {
                 HStack {
                     CoinDisplay(amount: coinsEarned)
                     Spacer()
@@ -87,48 +52,46 @@ struct TimerView: View {
                         showAddGoal = true
                     } label: {
                         Text("+")
-                            .font(.pixelBold(20))
-                            .foregroundColor(Color(hex: "4A7C59"))
+                            .font(.pixelBold(22))
+                            .foregroundColor(.white)
+                            .shadow(color: .black, radius: 2, x: 1, y: 1)
                     }
                 }
                 .padding(.horizontal)
+                .padding(.top, 8)
 
                 Spacer()
 
-                // Timer display
                 Text(formattedTime)
-                    .font(.pixelBold(32))
+                    .font(.pixelBold(22))
                     .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
-                    .pixelText()
+                    .shadow(color: .black, radius: 2, x: 1, y: 1)
 
                 Spacer()
 
-                // Flower growing on soil
-                ZStack {
-                    Image("soil_mound")
+                ZStack(alignment: .bottom) {
+                    Image("timer_soil_plot")
                         .resizable()
                         .interpolation(.none)
-                        .frame(width: 128, height: 96)
+                        .scaledToFit()
+                        .frame(width: 48, height: 24)
 
                     Image(flowerStages[stageForTime])
                         .resizable()
                         .interpolation(.none)
                         .scaledToFit()
-                        .frame(width: 80, height: 80)
-                        .offset(y: -40)
+                        .frame(width: 56, height: 56)
+                        .offset(y: -14)
                         .animation(.spring(response: 0.6), value: stageForTime)
                 }
-                .padding(.bottom, 40)
+                .padding(.bottom, 16)
 
-                // Goal selection
                 if !goals.isEmpty && selectedGoal == nil && !isRunning {
                     VStack(spacing: 8) {
                         Text("pick a goal")
-                            .font(.pixel(12))
-                            .foregroundColor(.white.opacity(0.7))
-                            .shadow(color: .black.opacity(0.5), radius: 0, x: 1, y: 1)
-                            .pixelText()
+                            .font(.pixel(13))
+                            .foregroundColor(.white)
+                            .shadow(color: .black, radius: 2, x: 1, y: 1)
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
@@ -138,14 +101,13 @@ struct TimerView: View {
                                     } label: {
                                         VStack(spacing: 6) {
                                             Text(goal.emoji)
-                                                .font(.system(size: 24))
+                                                .font(.system(size: 22))
                                             Text(goal.name)
                                                 .font(.pixel(10))
                                                 .foregroundColor(.white)
-                                                .pixelText()
                                         }
-                                        .padding(12)
-                                        .background(goal.color.opacity(0.3))
+                                        .padding(10)
+                                        .background(Color.black.opacity(0.4))
                                         .clipShape(RoundedRectangle(cornerRadius: 4))
                                     }
                                 }
@@ -157,17 +119,15 @@ struct TimerView: View {
                     Button {
                         showAddGoal = true
                     } label: {
-                        VStack(spacing: 8) {
+                        VStack(spacing: 6) {
                             Text("no goals yet")
-                                .font(.pixel(12))
-                                .foregroundColor(.white.opacity(0.7))
-                                .shadow(color: .black.opacity(0.5), radius: 0, x: 1, y: 1)
-                                .pixelText()
+                                .font(.pixel(13))
+                                .foregroundColor(.white)
+                                .shadow(color: .black, radius: 2, x: 1, y: 1)
                             Text("tap + to create one")
                                 .font(.pixel(10))
-                                .foregroundColor(.white.opacity(0.5))
-                                .shadow(color: .black.opacity(0.5), radius: 0, x: 1, y: 1)
-                                .pixelText()
+                                .foregroundColor(.white.opacity(0.7))
+                                .shadow(color: .black, radius: 2, x: 1, y: 1)
                         }
                     }
                 }
@@ -178,12 +138,11 @@ struct TimerView: View {
                             .font(.system(size: 16))
                         Text(goal.name)
                             .font(.pixel(12))
-                            .foregroundColor(.white.opacity(0.8))
-                            .pixelText()
+                            .foregroundColor(.white)
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
-                    .background(goal.color.opacity(0.2))
+                    .background(Color.black.opacity(0.4))
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                 }
 
@@ -191,32 +150,20 @@ struct TimerView: View {
                     PixelButton("Stop", isDestructive: true) {
                         stopTimer()
                     }
-                    .frame(width: 200)
+                    .frame(width: 180)
                 } else {
-                    PixelButton("Start Growing") {
+                    PixelButton("Start") {
                         startTimer()
                     }
-                    .frame(width: 200)
+                    .frame(width: 180)
                 }
 
-                Spacer().frame(height: 8)
+                Spacer().frame(height: 12)
             }
             .padding()
         }
         .sheet(isPresented: $showAddGoal) {
             AddGoalView()
-        }
-        .onAppear {
-            startCloudAnimation()
-        }
-    }
-
-    private func startCloudAnimation() {
-        withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
-            cloudOffset1 = UIScreen.main.bounds.width + 150
-        }
-        withAnimation(.linear(duration: 30).repeatForever(autoreverses: false)) {
-            cloudOffset2 = UIScreen.main.bounds.width + 200
         }
     }
 

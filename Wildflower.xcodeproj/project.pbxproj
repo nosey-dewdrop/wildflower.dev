@@ -22,6 +22,13 @@
 		A013 /* PressStart2P-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F013 /* PressStart2P-Regular.ttf */; };
 		A014 /* PixelifySans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F015 /* PixelifySans-Regular.ttf */; };
 		A015 /* PixelifySans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F016 /* PixelifySans-Bold.ttf */; };
+		A016 /* DriftingCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017 /* DriftingCloud.swift */; };
+		A017 /* FloatingButterfly.swift in Sources */ = {isa = PBXBuildFile; fileRef = F018 /* FloatingButterfly.swift */; };
+		A018 /* GentleSun.swift in Sources */ = {isa = PBXBuildFile; fileRef = F019 /* GentleSun.swift */; };
+		A019 /* ParallaxHills.swift in Sources */ = {isa = PBXBuildFile; fileRef = F020 /* ParallaxHills.swift */; };
+		A020 /* GrasslandForeground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F021 /* GrasslandForeground.swift */; };
+		A021 /* SceneTrees.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022 /* SceneTrees.swift */; };
+		A022 /* TimerSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023 /* TimerSceneView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +49,13 @@
 		F014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F015 /* PixelifySans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-Regular.ttf"; sourceTree = "<group>"; };
 		F016 /* PixelifySans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-Bold.ttf"; sourceTree = "<group>"; };
+		F017 /* DriftingCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftingCloud.swift; sourceTree = "<group>"; };
+		F018 /* FloatingButterfly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButterfly.swift; sourceTree = "<group>"; };
+		F019 /* GentleSun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GentleSun.swift; sourceTree = "<group>"; };
+		F020 /* ParallaxHills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxHills.swift; sourceTree = "<group>"; };
+		F021 /* GrasslandForeground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrasslandForeground.swift; sourceTree = "<group>"; };
+		F022 /* SceneTrees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTrees.swift; sourceTree = "<group>"; };
+		F023 /* TimerSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSceneView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -101,8 +115,23 @@
 			isa = PBXGroup;
 			children = (
 				F007 /* TimerView.swift */,
+				G012 /* Components */,
 			);
 			path = Timer;
+			sourceTree = "<group>";
+		};
+		G012 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F017 /* DriftingCloud.swift */,
+				F018 /* FloatingButterfly.swift */,
+				F019 /* GentleSun.swift */,
+				F020 /* ParallaxHills.swift */,
+				F021 /* GrasslandForeground.swift */,
+				F022 /* SceneTrees.swift */,
+				F023 /* TimerSceneView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		G006 /* Garden */ = {
@@ -240,6 +269,13 @@
 				A010 /* HouseView.swift in Sources */,
 				A011 /* AddGoalView.swift in Sources */,
 				A012 /* PixelFont.swift in Sources */,
+				A016 /* DriftingCloud.swift in Sources */,
+				A017 /* FloatingButterfly.swift in Sources */,
+				A018 /* GentleSun.swift in Sources */,
+				A019 /* ParallaxHills.swift in Sources */,
+				A020 /* GrasslandForeground.swift in Sources */,
+				A021 /* SceneTrees.swift in Sources */,
+				A022 /* TimerSceneView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
