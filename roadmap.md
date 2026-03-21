@@ -4,16 +4,18 @@
 - [x] project setup
 - [x] data models (Goal, Session)
 - [x] pixel art assets (flower, growth stages)
-- [ ] app entry point and swiftdata container
-- [ ] basic tab navigation (timer, garden, market, house)
-- [ ] color extension for hex support
+- [x] app entry point and swiftdata container
+- [x] basic tab navigation (timer, garden, market, house)
+- [x] color extension for hex support
+- [x] asset catalog with imagesets
 
 ## Phase 2: Timer
-- [ ] timer screen ui
-- [ ] goal selection before starting timer
-- [ ] countdown/stopwatch logic
-- [ ] session saving to swiftdata
+- [x] timer screen ui
+- [x] goal selection before starting timer
+- [x] countdown/stopwatch logic
+- [x] session saving to swiftdata
 - [ ] coin earning based on session duration
+- [ ] add goal flow from timer screen
 
 ## Phase 3: Garden
 - [ ] garden screen ui (grid layout)
