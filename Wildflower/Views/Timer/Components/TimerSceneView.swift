@@ -40,6 +40,9 @@ struct TimerSceneView: View {
                     .frame(width: w + 20, height: h - groundY + 20)
                     .position(x: w / 2, y: groundY + (h - groundY) / 2)
 
+                // Ground texture overlay (tiled)
+                GroundTextureOverlay(groundY: groundY)
+
                 // Trees and fence
                 SceneTrees(groundY: groundY)
                 FenceForeground(groundY: groundY)
