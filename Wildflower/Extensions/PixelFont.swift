@@ -2,14 +2,17 @@ import SwiftUI
 
 extension Font {
     static func pixel(_ size: CGFloat) -> Font {
-        .custom("PressStart2P-Regular", size: size)
+        .custom("PixelifySans-Regular", size: size)
+    }
+
+    static func pixelBold(_ size: CGFloat) -> Font {
+        .custom("PixelifySans-Bold", size: size)
     }
 }
 
 extension View {
-    func pixelText(_ size: CGFloat) -> some View {
-        self.font(.pixel(size))
-            .padding(.top, size * 0.3)
+    func pixelText() -> some View {
+        self
     }
 }
 
@@ -33,7 +36,7 @@ struct PixelButton: View {
                     .frame(height: 48)
 
                 Text(title)
-                    .font(.pixel(10))
+                    .font(.pixelBold(14))
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.5), radius: 0, x: 1, y: 1)
             }
@@ -70,7 +73,7 @@ struct CoinDisplay: View {
                 .interpolation(.none)
                 .frame(width: 20, height: 20)
             Text("\(amount)")
-                .font(.pixel(10))
+                .font(.pixelBold(14))
                 .foregroundColor(Color(hex: "FFD700"))
         }
         .padding(.horizontal, 12)

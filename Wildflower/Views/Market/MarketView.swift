@@ -8,27 +8,27 @@ struct MarketView: View {
             VStack {
                 HStack {
                     Text("Market")
-                        .font(.pixel(12))
+                        .font(.pixelBold(18))
                         .foregroundColor(.white)
                     Spacer()
                     CoinDisplay(amount: 0)
                 }
-                .padding()
+                .padding(.horizontal)
 
                 Spacer()
 
                 VStack(spacing: 16) {
-                    Image("icon_market")
+                    Image("icon_market_pixel")
                         .resizable()
                         .interpolation(.none)
                         .scaledToFit()
                         .frame(width: 64, height: 64)
 
                     Text("coming soon")
-                        .font(.pixel(10))
+                        .font(.pixelBold(16))
                         .foregroundColor(.white.opacity(0.6))
                     Text("seeds, pots\nfurniture & more")
-                        .font(.pixel(6))
+                        .font(.pixel(12))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white.opacity(0.3))
                 }

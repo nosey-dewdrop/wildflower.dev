@@ -8,26 +8,26 @@ struct HouseView: View {
             VStack {
                 HStack {
                     Text("My Room")
-                        .font(.pixel(12))
+                        .font(.pixelBold(18))
                         .foregroundColor(.white)
                     Spacer()
                 }
-                .padding()
+                .padding(.horizontal)
 
                 Spacer()
 
                 VStack(spacing: 16) {
-                    Image("icon_house")
+                    Image("icon_house_pixel")
                         .resizable()
                         .interpolation(.none)
                         .scaledToFit()
                         .frame(width: 64, height: 64)
 
                     Text("coming soon")
-                        .font(.pixel(10))
+                        .font(.pixelBold(16))
                         .foregroundColor(.white.opacity(0.6))
                     Text("decorate your room\nwith market items")
-                        .font(.pixel(6))
+                        .font(.pixel(12))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white.opacity(0.3))
                 }

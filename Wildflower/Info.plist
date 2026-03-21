@@ -5,6 +5,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>PressStart2P-Regular.ttf</string>
+		<string>PixelifySans-Regular.ttf</string>
+		<string>PixelifySans-Bold.ttf</string>
 	</array>
 </dict>
 </plist>

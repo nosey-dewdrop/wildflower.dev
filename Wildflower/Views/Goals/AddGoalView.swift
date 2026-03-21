@@ -19,7 +19,7 @@ struct AddGoalView: View {
 
                 VStack(spacing: 24) {
                     TextField("", text: $name, prompt: Text("goal name").foregroundColor(.white.opacity(0.3)))
-                        .font(.pixel(10))
+                        .font(.pixel(14))
                         .foregroundColor(.white)
                         .padding()
                         .background(Color.white.opacity(0.1))
@@ -27,7 +27,7 @@ struct AddGoalView: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         Text("emoji")
-                            .font(.pixel(7))
+                            .font(.pixel(12))
                             .foregroundColor(.white.opacity(0.5))
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 12) {
                             ForEach(emojis, id: \.self) { emoji in
@@ -46,7 +46,7 @@ struct AddGoalView: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         Text("color")
-                            .font(.pixel(7))
+                            .font(.pixel(12))
                             .foregroundColor(.white.opacity(0.5))
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4), spacing: 12) {
                             ForEach(colors, id: \.self) { color in
@@ -82,7 +82,7 @@ struct AddGoalView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("new goal")
-                        .font(.pixel(10))
+                        .font(.pixelBold(14))
                         .foregroundColor(.white)
                 }
                 ToolbarItem(placement: .cancellationAction) {
@@ -90,7 +90,7 @@ struct AddGoalView: View {
                         dismiss()
                     } label: {
                         Text("x")
-                            .font(.pixel(12))
+                            .font(.pixelBold(16))
                             .foregroundColor(.white.opacity(0.6))
                     }
                 }

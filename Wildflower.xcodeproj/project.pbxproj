@@ -20,6 +20,8 @@
 		A011 /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F011 /* AddGoalView.swift */; };
 		A012 /* PixelFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = F012 /* PixelFont.swift */; };
 		A013 /* PressStart2P-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F013 /* PressStart2P-Regular.ttf */; };
+		A014 /* PixelifySans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F015 /* PixelifySans-Regular.ttf */; };
+		A015 /* PixelifySans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F016 /* PixelifySans-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		F012 /* PixelFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelFont.swift; sourceTree = "<group>"; };
 		F013 /* PressStart2P-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PressStart2P-Regular.ttf"; sourceTree = "<group>"; };
 		F014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F015 /* PixelifySans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-Regular.ttf"; sourceTree = "<group>"; };
+		F016 /* PixelifySans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-Bold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -146,6 +150,8 @@
 			isa = PBXGroup;
 			children = (
 				F013 /* PressStart2P-Regular.ttf */,
+				F015 /* PixelifySans-Regular.ttf */,
+				F016 /* PixelifySans-Bold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -211,6 +217,8 @@
 			files = (
 				A001 /* Assets.xcassets in Resources */,
 				A013 /* PressStart2P-Regular.ttf in Resources */,
+				A014 /* PixelifySans-Regular.ttf in Resources */,
+				A015 /* PixelifySans-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
