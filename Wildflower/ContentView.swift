@@ -3,60 +3,51 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedTab = 0
 
-    init() {
-        let appearance = UITabBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .clear
-
-        let normalAttrs: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white.withAlphaComponent(0.5),
-            .font: UIFont(name: "Pixelify Sans", size: 10) ?? UIFont.systemFont(ofSize: 10)
-        ]
-        let selectedAttrs: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white,
-            .font: UIFont(name: "Pixelify Sans Bold", size: 10) ?? UIFont.boldSystemFont(ofSize: 10)
-        ]
-
-        appearance.stackedLayoutAppearance.normal.titleTextAttributes = normalAttrs
-        appearance.stackedLayoutAppearance.selected.titleTextAttributes = selectedAttrs
-
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
-    }
+    private let tabs: [(icon: String, label: String)] = [
+        ("icon_timer_pixel", "Timer"),
+        ("icon_garden_pixel", "Garden"),
+        ("icon_market_pixel", "Market"),
+        ("icon_house_pixel", "House")
+    ]
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            TimerView()
-                .tabItem {
-                    Image("icon_timer_pixel")
-                        .renderingMode(.original)
-                    Text("Timer")
+        ZStack(alignment: .bottom) {
+            // Content
+            Group {
+                switch selectedTab {
+                case 0: TimerView()
+                case 1: GardenView()
+                case 2: MarketView()
+                case 3: HouseView()
+                default: TimerView()
                 }
-                .tag(0)
+            }
+            .ignoresSafeArea()
 
-            GardenView()
-                .tabItem {
-                    Image("icon_garden_pixel")
-                        .renderingMode(.original)
-                    Text("Garden")
-                }
-                .tag(1)
+            // Custom tab bar
+            HStack {
+                ForEach(0..<tabs.count, id: \.self) { index in
+                    Button {
+                        selectedTab = index
+                    } label: {
+                        VStack(spacing: 2) {
+                            Image(tabs[index].icon)
+                                .renderingMode(.original)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 28, height: 28)
+                                .opacity(selectedTab == index ? 1.0 : 0.5)
 
-            MarketView()
-                .tabItem {
-                    Image("icon_market_pixel")
-                        .renderingMode(.original)
-                    Text("Market")
+                            Text(tabs[index].label)
+                                .font(.pixel(10))
+                                .foregroundColor(selectedTab == index ? .white : .white.opacity(0.5))
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
                 }
-                .tag(2)
-
-            HouseView()
-                .tabItem {
-                    Image("icon_house_pixel")
-                        .renderingMode(.original)
-                    Text("House")
-                }
-                .tag(3)
+            }
+            .padding(.top, 8)
+            .padding(.bottom, 20)
         }
     }
 }

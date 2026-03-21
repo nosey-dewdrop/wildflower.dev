@@ -65,7 +65,7 @@ struct TimerView: View {
                 }
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .padding(.top, 48)
+                .padding(.top, 75)
 
                 // Timer + Start button - TOGETHER in sky area
                 VStack(spacing: 12) {
