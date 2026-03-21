@@ -5,13 +5,21 @@
 - garden: plant multiple flowers, arrange your garden
 - house: single room, decorate with items from market
 - house decoration: wallpaper, furniture, floor items
-- pixel art style throughout the whole app
+- two pixel art styles: botanical detailed for flowers (64-128px), RPG tileset for garden (32px)
 - growth stages for flowers tied to total focus time on a goal
-- different flower types with different rarity levels
+- 10 flower types: daisy, crocus, tulip, forget-me-not, lily, hydrangea, iris, cherry blossom, lotus, orchid
+- color palette: rich pinks, soft blues, deep purples, warm yellows
+- garden is a living world: trees, bushes, paths, pond, rocks
+- ambient creatures: butterfly, bee, ladybug, dragonfly, bird, cat, fireflies, frog, squirrel
+- creatures unlock based on garden progress (more flowers = more life)
+- parallax depth layers: background trees, midground garden, foreground petals
+- lotus flower needs pond to be placed (special interaction)
+- cherry blossom grows as a branch not a single flower
 - seasonal items in the market
 - daily login bonus coins
 - streak rewards for consecutive days
 - social features later: visit friends gardens, gift items
 - achievements/badges system
 - ambient sounds during focus sessions
+- weather effects: wind sway, falling petals, morning dew, fireflies at night
 - spotify integration worth exploring
