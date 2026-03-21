@@ -15,7 +15,7 @@ struct ContentView: View {
             // Content
             Group {
                 switch selectedTab {
-                case 0: TimerView()
+                case 0: TimerPagerView()
                 case 1: GardenView()
                 case 2: MarketView()
                 case 3: HouseView()

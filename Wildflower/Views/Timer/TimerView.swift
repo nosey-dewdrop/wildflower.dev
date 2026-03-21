@@ -129,7 +129,6 @@ struct TimerView: View {
                 .position(x: w / 2, y: h * 0.47)
             }
         }
-        .ignoresSafeArea()
         .sheet(isPresented: $showAddGoal) {
             AddGoalView()
         }
@@ -153,6 +152,130 @@ struct TimerView: View {
         }
         timeElapsed = 0
         selectedGoal = nil
+    }
+}
+
+// MARK: - Pager (swipe left for history)
+
+struct TimerPagerView: View {
+    @State private var currentPage = 0
+
+    var body: some View {
+        TabView(selection: $currentPage) {
+            TimerView()
+                .tag(0)
+            SessionHistoryView()
+                .tag(1)
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .ignoresSafeArea()
+    }
+}
+
+// MARK: - Session History
+
+struct SessionHistoryView: View {
+    @Query(sort: \Session.startedAt, order: .reverse) private var sessions: [Session]
+
+    var body: some View {
+        ZStack {
+            Color(hex: "1A1A2E").ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                // Header
+                HStack {
+                    Text("history")
+                        .font(.pixelBold(18))
+                        .foregroundColor(.white)
+                    Spacer()
+                    Text("\(sessions.count) sessions")
+                        .font(.pixel(12))
+                        .foregroundColor(.white.opacity(0.5))
+                }
+                .padding(.horizontal)
+                .padding(.top, 70)
+                .padding(.bottom, 16)
+
+                if sessions.isEmpty {
+                    Spacer()
+                    VStack(spacing: 12) {
+                        Text("no sessions yet")
+                            .font(.pixelBold(14))
+                            .foregroundColor(.white.opacity(0.5))
+                        Text("swipe right to start focusing")
+                            .font(.pixel(11))
+                            .foregroundColor(.white.opacity(0.3))
+                    }
+                    Spacer()
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 8) {
+                            ForEach(sessions) { session in
+                                SessionRow(session: session)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.bottom, 80)
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct SessionRow: View {
+    let session: Session
+
+    private var minutesDuration: Int {
+        session.duration / 60
+    }
+
+    private var dateString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM"
+        return formatter.string(from: session.startedAt)
+    }
+
+    private var timeString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: session.startedAt)
+    }
+
+    var body: some View {
+        HStack(spacing: 12) {
+            // Goal emoji
+            Text(session.goal?.emoji ?? "🌱")
+                .font(.system(size: 24))
+                .frame(width: 40, height: 40)
+                .background(Color.white.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+
+            // Goal name + date
+            VStack(alignment: .leading, spacing: 4) {
+                Text(session.goal?.name ?? "free focus")
+                    .font(.pixelBold(13))
+                    .foregroundColor(.white)
+                HStack(spacing: 6) {
+                    Text(dateString)
+                        .font(.pixel(10))
+                        .foregroundColor(.white.opacity(0.4))
+                    Text(timeString)
+                        .font(.pixel(10))
+                        .foregroundColor(.white.opacity(0.3))
+                }
+            }
+
+            Spacer()
+
+            // Duration
+            Text("\(minutesDuration) min")
+                .font(.pixelBold(14))
+                .foregroundColor(.white.opacity(0.8))
+        }
+        .padding(12)
+        .background(Color.white.opacity(0.06))
+        .clipShape(RoundedRectangle(cornerRadius: 6))
     }
 }
 
