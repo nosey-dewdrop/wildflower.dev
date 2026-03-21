@@ -18,46 +18,46 @@ struct AddGoalView: View {
                 Color(hex: "1A1A2E").ignoresSafeArea()
 
                 VStack(spacing: 24) {
-                    TextField("Goal name", text: $name)
-                        .font(.title3)
+                    TextField("", text: $name, prompt: Text("goal name").foregroundColor(.white.opacity(0.3)))
+                        .font(.pixel(10))
                         .foregroundColor(.white)
                         .padding()
                         .background(Color.white.opacity(0.1))
-                        .cornerRadius(12)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Emoji")
-                            .foregroundColor(.white.opacity(0.6))
-                            .font(.caption)
+                        Text("emoji")
+                            .font(.pixel(7))
+                            .foregroundColor(.white.opacity(0.5))
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 12) {
                             ForEach(emojis, id: \.self) { emoji in
                                 Button {
                                     selectedEmoji = emoji
                                 } label: {
                                     Text(emoji)
-                                        .font(.title2)
+                                        .font(.system(size: 24))
                                         .frame(width: 44, height: 44)
                                         .background(selectedEmoji == emoji ? Color.white.opacity(0.2) : Color.clear)
-                                        .cornerRadius(10)
+                                        .clipShape(RoundedRectangle(cornerRadius: 4))
                                 }
                             }
                         }
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Color")
-                            .foregroundColor(.white.opacity(0.6))
-                            .font(.caption)
+                        Text("color")
+                            .font(.pixel(7))
+                            .foregroundColor(.white.opacity(0.5))
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4), spacing: 12) {
                             ForEach(colors, id: \.self) { color in
                                 Button {
                                     selectedColor = color
                                 } label: {
-                                    Circle()
+                                    RoundedRectangle(cornerRadius: 4)
                                         .fill(Color(hex: color))
                                         .frame(width: 44, height: 44)
                                         .overlay(
-                                            Circle()
+                                            RoundedRectangle(cornerRadius: 4)
                                                 .stroke(Color.white, lineWidth: selectedColor == color ? 3 : 0)
                                         )
                                 }
@@ -67,32 +67,35 @@ struct AddGoalView: View {
 
                     Spacer()
 
-                    Button {
+                    PixelButton("Plant This Goal") {
                         let goal = Goal(name: name, emoji: selectedEmoji, colorHex: selectedColor)
                         modelContext.insert(goal)
                         dismiss()
-                    } label: {
-                        Text("Plant This Goal")
-                            .font(.system(size: 18, weight: .semibold, design: .rounded))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(name.isEmpty ? Color.gray : Color(hex: selectedColor))
-                            .cornerRadius(28)
                     }
+                    .opacity(name.isEmpty ? 0.5 : 1)
                     .disabled(name.isEmpty)
                 }
                 .padding()
             }
-            .navigationTitle("New Goal")
+            .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                ToolbarItem(placement: .principal) {
+                    Text("new goal")
+                        .font(.pixel(10))
                         .foregroundColor(.white)
                 }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("x")
+                            .font(.pixel(12))
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+                }
             }
+            .toolbarColorScheme(.dark, for: .navigationBar)
         }
     }
 }

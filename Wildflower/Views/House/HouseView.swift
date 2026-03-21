@@ -6,10 +6,13 @@ struct HouseView: View {
             Color(hex: "4A3728").ignoresSafeArea()
 
             VStack {
-                Text("My Room")
-                    .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
-                    .padding(.top)
+                HStack {
+                    Text("My Room")
+                        .font(.pixel(12))
+                        .foregroundColor(.white)
+                    Spacer()
+                }
+                .padding()
 
                 Spacer()
 
@@ -19,15 +22,14 @@ struct HouseView: View {
                         .interpolation(.none)
                         .scaledToFit()
                         .frame(width: 64, height: 64)
-                        .opacity(0.6)
 
-                    Text("Coming soon")
-                        .foregroundColor(.white.opacity(0.5))
-                        .font(.subheadline)
-                    Text("Decorate your room\nwith items from the market")
+                    Text("coming soon")
+                        .font(.pixel(10))
+                        .foregroundColor(.white.opacity(0.6))
+                    Text("decorate your room\nwith market items")
+                        .font(.pixel(6))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white.opacity(0.3))
-                        .font(.caption)
                 }
 
                 Spacer()

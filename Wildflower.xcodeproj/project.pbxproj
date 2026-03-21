@@ -18,6 +18,8 @@
 		A009 /* MarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F009 /* MarketView.swift */; };
 		A010 /* HouseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F010 /* HouseView.swift */; };
 		A011 /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F011 /* AddGoalView.swift */; };
+		A012 /* PixelFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = F012 /* PixelFont.swift */; };
+		A013 /* PressStart2P-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F013 /* PressStart2P-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,9 @@
 		F009 /* MarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketView.swift; sourceTree = "<group>"; };
 		F010 /* HouseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseView.swift; sourceTree = "<group>"; };
 		F011 /* AddGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalView.swift; sourceTree = "<group>"; };
+		F012 /* PixelFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelFont.swift; sourceTree = "<group>"; };
+		F013 /* PressStart2P-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PressStart2P-Regular.ttf"; sourceTree = "<group>"; };
+		F014 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -44,15 +49,17 @@
 			);
 			sourceTree = "<group>";
 		};
-		G001 /* Wildflower */ = {
+			G001 /* Wildflower */ = {
 			isa = PBXGroup;
 			children = (
+				F014 /* Info.plist */,
 				F002 /* WildflowerApp.swift */,
 				F003 /* ContentView.swift */,
 				F001 /* Assets.xcassets */,
 				G003 /* Models */,
 				G004 /* Views */,
 				G009 /* Extensions */,
+				G011 /* Fonts */,
 			);
 			path = Wildflower;
 			sourceTree = "<group>";
@@ -122,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				F004 /* Color+Hex.swift */,
+				F012 /* PixelFont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -132,6 +140,14 @@
 				F011 /* AddGoalView.swift */,
 			);
 			path = Goals;
+			sourceTree = "<group>";
+		};
+		G011 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F013 /* PressStart2P-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A001 /* Assets.xcassets in Resources */,
+				A013 /* PressStart2P-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +231,7 @@
 				A009 /* MarketView.swift in Sources */,
 				A010 /* HouseView.swift in Sources */,
 				A011 /* AddGoalView.swift in Sources */,
+				A012 /* PixelFont.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +366,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Wildflower/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -371,6 +390,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Wildflower/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

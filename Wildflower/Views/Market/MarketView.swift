@@ -8,24 +8,10 @@ struct MarketView: View {
             VStack {
                 HStack {
                     Text("Market")
-                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .font(.pixel(12))
                         .foregroundColor(.white)
-
                     Spacer()
-
-                    HStack(spacing: 4) {
-                        Image("coin")
-                            .resizable()
-                            .interpolation(.none)
-                            .frame(width: 20, height: 20)
-                        Text("0")
-                            .font(.system(size: 16, weight: .bold, design: .monospaced))
-                            .foregroundColor(Color(hex: "FFD700"))
-                    }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(Color(hex: "5D4037"))
-                    .cornerRadius(16)
+                    CoinDisplay(amount: 0)
                 }
                 .padding()
 
@@ -37,15 +23,14 @@ struct MarketView: View {
                         .interpolation(.none)
                         .scaledToFit()
                         .frame(width: 64, height: 64)
-                        .opacity(0.6)
 
-                    Text("Coming soon")
-                        .foregroundColor(.white.opacity(0.5))
-                        .font(.subheadline)
-                    Text("Seeds, pots, furniture\nand more")
+                    Text("coming soon")
+                        .font(.pixel(10))
+                        .foregroundColor(.white.opacity(0.6))
+                    Text("seeds, pots\nfurniture & more")
+                        .font(.pixel(6))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white.opacity(0.3))
-                        .font(.caption)
                 }
 
                 Spacer()

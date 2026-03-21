@@ -8,6 +8,7 @@ struct ContentView: View {
             TimerView()
                 .tabItem {
                     Image("icon_timer")
+                        .renderingMode(.original)
                     Text("Timer")
                 }
                 .tag(0)
@@ -15,6 +16,7 @@ struct ContentView: View {
             GardenView()
                 .tabItem {
                     Image("icon_garden")
+                        .renderingMode(.original)
                     Text("Garden")
                 }
                 .tag(1)
@@ -22,6 +24,7 @@ struct ContentView: View {
             MarketView()
                 .tabItem {
                     Image("icon_market")
+                        .renderingMode(.original)
                     Text("Market")
                 }
                 .tag(2)
@@ -29,6 +32,7 @@ struct ContentView: View {
             HouseView()
                 .tabItem {
                     Image("icon_house")
+                        .renderingMode(.original)
                     Text("House")
                 }
                 .tag(3)
