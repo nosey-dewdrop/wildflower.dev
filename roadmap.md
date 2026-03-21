@@ -4,7 +4,6 @@
 - [x] project setup
 - [x] data models (Goal, Session)
 - [x] pixel art assets (flower, growth stages)
-- [x] garden tile assets (grass, dirt, fence, tree, bush, pond, stone)
 - [x] app entry point and swiftdata container
 - [x] basic tab navigation (timer, garden, market, house)
 - [x] color extension for hex support

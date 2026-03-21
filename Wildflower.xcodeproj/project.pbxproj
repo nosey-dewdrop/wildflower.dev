@@ -29,6 +29,7 @@
 		A020 /* GrasslandForeground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F021 /* GrasslandForeground.swift */; };
 		A021 /* SceneTrees.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022 /* SceneTrees.swift */; };
 		A022 /* TimerSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023 /* TimerSceneView.swift */; };
+		A023 /* TimerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F024 /* TimerScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		F021 /* GrasslandForeground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrasslandForeground.swift; sourceTree = "<group>"; };
 		F022 /* SceneTrees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTrees.swift; sourceTree = "<group>"; };
 		F023 /* TimerSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSceneView.swift; sourceTree = "<group>"; };
+		F024 /* TimerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -130,6 +132,7 @@
 				F021 /* GrasslandForeground.swift */,
 				F022 /* SceneTrees.swift */,
 				F023 /* TimerSceneView.swift */,
+				F024 /* TimerScene.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				A020 /* GrasslandForeground.swift in Sources */,
 				A021 /* SceneTrees.swift in Sources */,
 				A022 /* TimerSceneView.swift in Sources */,
+				A023 /* TimerScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

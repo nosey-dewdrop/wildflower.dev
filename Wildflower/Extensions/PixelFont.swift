@@ -2,11 +2,11 @@ import SwiftUI
 
 extension Font {
     static func pixel(_ size: CGFloat) -> Font {
-        .custom("PixelifySans-Regular", size: size)
+        .custom("Pixelify Sans", size: size)
     }
 
     static func pixelBold(_ size: CGFloat) -> Font {
-        .custom("PixelifySans-Bold", size: size)
+        .custom("Pixelify Sans Bold", size: size)
     }
 }
 

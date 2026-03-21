@@ -63,9 +63,9 @@ struct TimerView: View {
                 Spacer()
 
                 Text(formattedTime)
-                    .font(.pixelBold(52))
+                    .font(.pixelBold(22))
                     .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.6), radius: 4, x: 2, y: 2)
+                    .shadow(color: .black, radius: 2, x: 1, y: 1)
 
                 Spacer()
 
@@ -74,16 +74,17 @@ struct TimerView: View {
                         .resizable()
                         .interpolation(.none)
                         .scaledToFit()
-                        .frame(width: 90, height: 45)
+                        .frame(width: 48, height: 24)
 
                     Image(flowerStages[stageForTime])
                         .resizable()
                         .interpolation(.none)
                         .scaledToFit()
-                        .frame(width: 150, height: 150)
-                        .offset(y: -30)
+                        .frame(width: 56, height: 56)
+                        .offset(y: -14)
                         .animation(.spring(response: 0.6), value: stageForTime)
                 }
+                .padding(.bottom, 16)
 
                 if !goals.isEmpty && selectedGoal == nil && !isRunning {
                     VStack(spacing: 8) {
