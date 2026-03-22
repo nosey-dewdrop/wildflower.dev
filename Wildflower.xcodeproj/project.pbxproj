@@ -30,6 +30,8 @@
 		A021 /* SceneTrees.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022 /* SceneTrees.swift */; };
 		A022 /* TimerSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023 /* TimerSceneView.swift */; };
 		A025 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F025 /* Wallet.swift */; };
+		A026 /* GardenItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026 /* GardenItem.swift */; };
+		A027 /* ShopItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F027 /* ShopItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		F022 /* SceneTrees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTrees.swift; sourceTree = "<group>"; };
 		F023 /* TimerSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSceneView.swift; sourceTree = "<group>"; };
 		F025 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		F026 /* GardenItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenItem.swift; sourceTree = "<group>"; };
+		F027 /* ShopItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -98,6 +102,8 @@
 				F005 /* Goal.swift */,
 				F006 /* Session.swift */,
 				F025 /* Wallet.swift */,
+				F026 /* GardenItem.swift */,
+				F027 /* ShopItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -281,6 +287,8 @@
 				A021 /* SceneTrees.swift in Sources */,
 				A022 /* TimerSceneView.swift in Sources */,
 				A025 /* Wallet.swift in Sources */,
+				A026 /* GardenItem.swift in Sources */,
+				A027 /* ShopItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

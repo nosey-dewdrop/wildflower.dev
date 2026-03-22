@@ -7,6 +7,6 @@ struct WildflowerApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [Goal.self, Session.self, Wallet.self])
+        .modelContainer(for: [Goal.self, Session.self, Wallet.self, GardenItem.self])
     }
 }

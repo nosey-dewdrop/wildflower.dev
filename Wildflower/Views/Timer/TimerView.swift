@@ -299,5 +299,5 @@ struct SessionRow: View {
 
 #Preview {
     TimerView()
-        .modelContainer(for: [Goal.self, Session.self, Wallet.self], inMemory: true)
+        .modelContainer(for: [Goal.self, Session.self, Wallet.self, GardenItem.self], inMemory: true)
 }
