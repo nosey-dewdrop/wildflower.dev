@@ -132,6 +132,10 @@ struct TimerView: View {
         .sheet(isPresented: $showAddGoal) {
             AddGoalView()
         }
+        .onDisappear {
+            timer?.invalidate()
+            timer = nil
+        }
     }
 
     private func startTimer() {
@@ -147,7 +151,7 @@ struct TimerView: View {
         timer?.invalidate()
         timer = nil
         if let goal = selectedGoal, timeElapsed > 0 {
-            let session = Session(goal: goal, duration: timeElapsed)
+            let session = Session(goal: goal, duration: timeElapsed, completed: true)
             modelContext.insert(session)
         }
         timeElapsed = 0
