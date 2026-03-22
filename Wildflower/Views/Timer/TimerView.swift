@@ -13,6 +13,7 @@ struct TimerView: View {
     @State private var isRunning = false
     @State private var timer: Timer?
     @State private var showAddGoal = false
+    @State private var showMarket = false
     @State private var showFlowerPicker = false
     @State private var selectedFlower = "daisy"
     @State private var editingGoal: Goal?
@@ -124,93 +125,114 @@ struct TimerView: View {
                 HStack {
                     CoinDisplay(amount: (wallet?.coins ?? 0) + coinsEarned)
                     Spacer()
-                    Button { showAddGoal = true } label: {
-                        Text("+")
-                            .font(.pixelBold(22))
-                            .foregroundColor(.white)
-                            .shadow(color: .black, radius: 2, x: 1, y: 1)
+                    Button { showMarket = true } label: {
+                        Image("icon_market_pixel")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 28, height: 28)
                     }
                 }
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.top, 75)
 
-                // Timer + Start button - TOGETHER in sky area
-                VStack(spacing: 12) {
-                    Text(formattedTime)
-                        .font(.pixelBold(44))
-                        .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.6), radius: 4, x: 2, y: 2)
-                        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 0)
-                        .scaleEffect(1.4)
+                // Timer in sky
+                Text(formattedTime)
+                    .font(.pixelBold(44))
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.6), radius: 4, x: 2, y: 2)
+                    .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 0)
+                    .scaleEffect(1.4)
+                    .position(x: w / 2, y: h * 0.38)
 
-                    // Goal selection
-                    if !goals.isEmpty && selectedGoal == nil && !isRunning {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 12) {
-                                ForEach(goals) { goal in
-                                    Button {
-                                        selectedGoal = goal
-                                    } label: {
+                // Goal selection - between timer and button
+                if !isRunning {
+                    VStack(spacing: 8) {
+                        if !goals.isEmpty && selectedGoal == nil {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 12) {
+                                    ForEach(goals) { goal in
+                                        Button {
+                                            selectedGoal = goal
+                                        } label: {
+                                            VStack(spacing: 6) {
+                                                Text(goal.emoji).font(.system(size: 22))
+                                                Text(goal.name).font(.pixel(10)).foregroundColor(.white)
+                                            }
+                                            .padding(10)
+                                            .background(Color.black.opacity(0.4))
+                                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                                        }
+                                        .contextMenu {
+                                            Button {
+                                                editingGoal = goal
+                                            } label: {
+                                                Label("Edit", systemImage: "pencil")
+                                            }
+                                            Button(role: .destructive) {
+                                                modelContext.delete(goal)
+                                            } label: {
+                                                Label("Delete", systemImage: "trash")
+                                            }
+                                        }
+                                    }
+                                    // Add goal button in scroll
+                                    Button { showAddGoal = true } label: {
                                         VStack(spacing: 6) {
-                                            Text(goal.emoji).font(.system(size: 22))
-                                            Text(goal.name).font(.pixel(10)).foregroundColor(.white)
+                                            Text("+").font(.system(size: 22))
+                                            Text("new").font(.pixel(10)).foregroundColor(.white)
                                         }
                                         .padding(10)
-                                        .background(Color.black.opacity(0.4))
+                                        .background(Color.white.opacity(0.1))
                                         .clipShape(RoundedRectangle(cornerRadius: 4))
                                     }
-                                    .contextMenu {
-                                        Button {
-                                            editingGoal = goal
-                                        } label: {
-                                            Label("Edit", systemImage: "pencil")
-                                        }
-                                        Button(role: .destructive) {
-                                            modelContext.delete(goal)
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
-                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        } else if goals.isEmpty {
+                            Button { showAddGoal = true } label: {
+                                VStack(spacing: 4) {
+                                    Text("no goals yet")
+                                        .font(.pixel(13))
+                                        .foregroundColor(.white)
+                                        .shadow(color: .black, radius: 2, x: 1, y: 1)
+                                    Text("tap to create one")
+                                        .font(.pixel(10))
+                                        .foregroundColor(.white.opacity(0.7))
+                                        .shadow(color: .black, radius: 2, x: 1, y: 1)
                                 }
                             }
-                            .padding(.horizontal)
                         }
-                    } else if goals.isEmpty && !isRunning {
-                        VStack(spacing: 4) {
-                            Text("no goals yet")
-                                .font(.pixel(13))
-                                .foregroundColor(.white)
-                                .shadow(color: .black, radius: 2, x: 1, y: 1)
-                            Text("tap + to create one")
-                                .font(.pixel(10))
-                                .foregroundColor(.white.opacity(0.7))
-                                .shadow(color: .black, radius: 2, x: 1, y: 1)
+
+                        if let goal = selectedGoal {
+                            HStack(spacing: 6) {
+                                Text(goal.emoji).font(.system(size: 16))
+                                Text(goal.name).font(.pixel(12)).foregroundColor(.white)
+                            }
+                            .padding(.horizontal, 12).padding(.vertical, 8)
+                            .background(Color.black.opacity(0.4))
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
                     }
+                    .position(x: w / 2, y: h * 0.48)
+                }
 
-                    if let goal = selectedGoal, !isRunning {
-                        HStack(spacing: 6) {
-                            Text(goal.emoji).font(.system(size: 16))
-                            Text(goal.name).font(.pixel(12)).foregroundColor(.white)
-                        }
-                        .padding(.horizontal, 12).padding(.vertical, 8)
-                        .background(Color.black.opacity(0.4))
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                    }
-
-                    // Start/Stop - right below timer
+                // Start/Stop button - FIXED position, never moves
+                Group {
                     if isRunning {
                         PixelButton("Stop", isDestructive: true) { stopTimer() }
                     } else {
                         PixelButton("Start") { startTimer() }
                     }
                 }
-                .position(x: w / 2, y: h * 0.47)
+                .position(x: w / 2, y: h * 0.56)
             }
         }
         .sheet(isPresented: $showAddGoal) {
             AddGoalView()
+        }
+        .sheet(isPresented: $showMarket) {
+            MarketView()
         }
         .sheet(item: $editingGoal) { goal in
             AddGoalView(editGoal: goal)

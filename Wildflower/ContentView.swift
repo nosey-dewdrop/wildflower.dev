@@ -6,8 +6,6 @@ struct ContentView: View {
     private let tabs: [(icon: String, label: String)] = [
         ("icon_timer_pixel", "Timer"),
         ("icon_garden_pixel", "Garden"),
-        ("icon_market_pixel", "Market"),
-        ("icon_house_pixel", "House")
     ]
 
     var body: some View {
@@ -17,9 +15,7 @@ struct ContentView: View {
                 switch selectedTab {
                 case 0: TimerPagerView()
                 case 1: GardenView()
-                case 2: MarketView()
-                case 3: HouseView()
-                default: TimerView()
+                default: TimerPagerView()
                 }
             }
             .ignoresSafeArea()
@@ -54,5 +50,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [Goal.self, Session.self], inMemory: true)
+        .modelContainer(for: [Goal.self, Session.self, Wallet.self, GardenItem.self], inMemory: true)
 }
