@@ -14,17 +14,15 @@ struct AddGoalView: View {
 
     var body: some View {
         ZStack {
-            // Grass background
-            Color(hex: "2D5016").ignoresSafeArea()
+            // Grass background gradient
+            LinearGradient(
+                colors: [Color(hex: "3A6B1E"), Color(hex: "2D5016"), Color(hex: "244210")],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
-            // Grass texture overlay
-            Image("grass_tile_a")
-                .resizable(resizingMode: .tile)
-                .interpolation(.none)
-                .opacity(0.15)
-                .ignoresSafeArea()
-
-            Color.black.opacity(0.25).ignoresSafeArea()
+            Color.black.opacity(0.2).ignoresSafeArea()
 
             VStack(spacing: 0) {
                 // Header
