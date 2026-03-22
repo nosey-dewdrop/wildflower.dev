@@ -9,7 +9,7 @@ final class Session {
     var duration: Int
     var completed: Bool
 
-    init(goal: Goal, startedAt: Date = Date(), duration: Int = 0, completed: Bool = true) {
+    init(goal: Goal, startedAt: Date = Date(), duration: Int = 0, completed: Bool = false) {
         self.id = UUID()
         self.goal = goal
         self.startedAt = startedAt
