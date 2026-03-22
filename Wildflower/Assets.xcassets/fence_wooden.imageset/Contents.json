@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "fence_wooden.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
