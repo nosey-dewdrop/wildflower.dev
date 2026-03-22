@@ -10,12 +10,6 @@ extension Font {
     }
 }
 
-extension View {
-    func pixelText() -> some View {
-        self
-    }
-}
-
 struct PixelButton: View {
     let title: String
     let isDestructive: Bool

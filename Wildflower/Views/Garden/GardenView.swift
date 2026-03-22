@@ -1,5 +1,4 @@
 import SwiftUI
-import SwiftData
 
 struct GardenView: View {
     var body: some View {
