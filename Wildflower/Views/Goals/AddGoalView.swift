@@ -14,14 +14,17 @@ struct AddGoalView: View {
 
     var body: some View {
         ZStack {
-            // Pixel art background
-            Image("timer_bg_cozy")
-                .resizable()
+            // Grass background
+            Color(hex: "2D5016").ignoresSafeArea()
+
+            // Grass texture overlay
+            Image("grass_tile_a")
+                .resizable(resizingMode: .tile)
                 .interpolation(.none)
-                .scaledToFill()
+                .opacity(0.15)
                 .ignoresSafeArea()
 
-            Color.black.opacity(0.4).ignoresSafeArea()
+            Color.black.opacity(0.25).ignoresSafeArea()
 
             VStack(spacing: 0) {
                 // Header
