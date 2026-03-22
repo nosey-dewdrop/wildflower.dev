@@ -1,6 +1,11 @@
 import SwiftUI
+import SwiftData
 
 struct MarketView: View {
+    @Query private var wallets: [Wallet]
+
+    private var wallet: Wallet? { wallets.first }
+
     var body: some View {
         ZStack {
             Color(hex: "3E2723").ignoresSafeArea()
@@ -11,7 +16,7 @@ struct MarketView: View {
                         .font(.pixelBold(18))
                         .foregroundColor(.white)
                     Spacer()
-                    CoinDisplay(amount: 0)
+                    CoinDisplay(amount: wallet?.coins ?? 0)
                 }
                 .padding(.horizontal)
 

@@ -4,6 +4,9 @@ import SwiftData
 struct TimerView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var goals: [Goal]
+    @Query private var wallets: [Wallet]
+
+    private var wallet: Wallet? { wallets.first }
 
     @State private var selectedGoal: Goal?
     @State private var timeElapsed: Int = 0
@@ -54,7 +57,7 @@ struct TimerView: View {
 
                 // Top bar
                 HStack {
-                    CoinDisplay(amount: coinsEarned)
+                    CoinDisplay(amount: (wallet?.coins ?? 0) + coinsEarned)
                     Spacer()
                     Button { showAddGoal = true } label: {
                         Text("+")
@@ -153,6 +156,17 @@ struct TimerView: View {
         if let goal = selectedGoal, timeElapsed > 0 {
             let session = Session(goal: goal, duration: timeElapsed, completed: true)
             modelContext.insert(session)
+
+            // Earn coins
+            let earned = timeElapsed / 60
+            if earned > 0 {
+                if let wallet = wallet {
+                    wallet.earn(earned)
+                } else {
+                    let newWallet = Wallet(coins: earned)
+                    modelContext.insert(newWallet)
+                }
+            }
         }
         timeElapsed = 0
         selectedGoal = nil
@@ -285,5 +299,5 @@ struct SessionRow: View {
 
 #Preview {
     TimerView()
-        .modelContainer(for: [Goal.self, Session.self], inMemory: true)
+        .modelContainer(for: [Goal.self, Session.self, Wallet.self], inMemory: true)
 }
