@@ -214,7 +214,7 @@ struct TimerView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
                     }
-                    .position(x: w / 2, y: h * 0.48)
+                    .position(x: w / 2, y: h * 0.54)
                 }
 
                 // Start/Stop button - FIXED position, never moves
@@ -225,7 +225,7 @@ struct TimerView: View {
                         PixelButton("Start") { startTimer() }
                     }
                 }
-                .position(x: w / 2, y: h * 0.56)
+                .position(x: w / 2, y: h * 0.48)
             }
         }
         .sheet(isPresented: $showAddGoal) {
