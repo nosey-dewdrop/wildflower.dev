@@ -39,6 +39,15 @@ struct GardenView: View {
                     Spacer()
                 }
 
+                // House
+                Image("icon_house_pixel")
+                    .resizable()
+                    .interpolation(.none)
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .shadow(color: .black.opacity(0.4), radius: 3, x: 1, y: 2)
+                    .position(x: geo.size.width * 0.8, y: geo.size.height * 0.3)
+
                 // Garden items
                 ForEach(gardenItems) { item in
                     let isDragging = draggedItem?.id == item.id
