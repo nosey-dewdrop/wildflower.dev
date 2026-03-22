@@ -5,9 +5,13 @@ struct AddGoalView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
+    var editGoal: Goal?
+
     @State private var name = ""
     @State private var selectedEmoji = "🌸"
     @State private var selectedColor = "4A7C59"
+
+    private var isEditing: Bool { editGoal != nil }
 
     private let emojis = ["🌸", "📚", "💻", "🎨", "🏋️", "🎵", "✍️", "🧘", "📖", "🎯", "💡", "🌿"]
     private let colors = ["4A7C59", "E76F51", "5E60CE", "F4A261", "2A9D8F", "E63946", "457B9D", "6D597A"]
@@ -36,19 +40,17 @@ struct AddGoalView: View {
                             .shadow(color: .black, radius: 2, x: 1, y: 1)
                     }
                     Spacer()
-                    Text("new goal")
+                    Text(isEditing ? "edit goal" : "new goal")
                         .font(.pixelBold(16))
                         .foregroundColor(.white)
                         .shadow(color: .black, radius: 2, x: 1, y: 1)
                     Spacer()
-                    // Balance for spacing
                     Text("x").font(.pixelBold(18)).opacity(0)
                 }
                 .padding(.horizontal)
                 .padding(.top, 16)
                 .padding(.bottom, 24)
 
-                // Content in pixel panel style
                 VStack(spacing: 20) {
                     // Name input
                     VStack(alignment: .leading, spacing: 6) {
@@ -149,10 +151,16 @@ struct AddGoalView: View {
 
                     Spacer()
 
-                    // Plant button
-                    PixelButton("Plant") {
-                        let goal = Goal(name: name, emoji: selectedEmoji, colorHex: selectedColor)
-                        modelContext.insert(goal)
+                    // Save button
+                    PixelButton(isEditing ? "Save" : "Plant") {
+                        if let goal = editGoal {
+                            goal.name = name
+                            goal.emoji = selectedEmoji
+                            goal.colorHex = selectedColor
+                        } else {
+                            let goal = Goal(name: name, emoji: selectedEmoji, colorHex: selectedColor)
+                            modelContext.insert(goal)
+                        }
                         dismiss()
                     }
                     .opacity(name.isEmpty ? 0.5 : 1)
@@ -160,6 +168,13 @@ struct AddGoalView: View {
                     .padding(.bottom, 8)
                 }
                 .padding(.horizontal, 20)
+            }
+        }
+        .onAppear {
+            if let goal = editGoal {
+                name = goal.name
+                selectedEmoji = goal.emoji
+                selectedColor = goal.colorHex
             }
         }
     }

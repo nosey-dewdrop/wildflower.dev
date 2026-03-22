@@ -13,20 +13,30 @@ struct TimerView: View {
     @State private var isRunning = false
     @State private var timer: Timer?
     @State private var showAddGoal = false
+    @State private var showFlowerPicker = false
+    @State private var selectedFlower = "daisy"
+    @State private var editingGoal: Goal?
 
-    private let flowerStages = [
-        "daisy_1_seed", "daisy_2_sprout", "daisy_3_bud",
-        "daisy_4_blooming", "daisy_5_full_bloom"
+    private let flowerTypes = [
+        ("daisy", "Daisy"),
+        ("tulip", "Tulip"),
+        ("rose", "Rose"),
+        ("sunflower", "Sunflower"),
+        ("lavender", "Lavender"),
     ]
 
+    private var currentFlowerAsset: String {
+        let stages = ["\(selectedFlower)_seed", "\(selectedFlower)_sprout", "\(selectedFlower)_bud", "\(selectedFlower)_bloom"]
+        let index = min(stageForTime, stages.count - 1)
+        return stages[index]
+    }
 
     private var stageForTime: Int {
         switch timeElapsed {
         case 0..<60: return 0
         case 60..<300: return 1
         case 300..<900: return 2
-        case 900..<1800: return 3
-        default: return 4
+        default: return 3
         }
     }
 
@@ -45,15 +55,70 @@ struct TimerView: View {
                 // Living scene
                 TimerSceneView()
 
-                // Flower - scale 1.2, on ground, centered
-                Image(flowerStages[stageForTime])
+                // Flower - tap to change type
+                Image(currentFlowerAsset)
                     .resizable()
                     .interpolation(.none)
                     .scaledToFit()
                     .frame(width: 180, height: 180)
                     .scaleEffect(1.2)
                     .animation(.spring(response: 0.6), value: stageForTime)
+                    .animation(.spring(response: 0.4), value: selectedFlower)
                     .position(x: w / 2, y: h * 0.655)
+                    .onTapGesture {
+                        if !isRunning {
+                            withAnimation(.spring(response: 0.3)) {
+                                showFlowerPicker.toggle()
+                            }
+                        }
+                    }
+
+                // Flower picker overlay
+                if showFlowerPicker {
+                    VStack(spacing: 0) {
+                        Spacer()
+
+                        VStack(spacing: 12) {
+                            Text("choose flower")
+                                .font(.pixelBold(13))
+                                .foregroundColor(.white)
+
+                            HStack(spacing: 16) {
+                                ForEach(flowerTypes, id: \.0) { key, name in
+                                    Button {
+                                        selectedFlower = key
+                                        withAnimation(.spring(response: 0.3)) {
+                                            showFlowerPicker = false
+                                        }
+                                    } label: {
+                                        VStack(spacing: 6) {
+                                            Image("\(key)_bloom")
+                                                .resizable()
+                                                .interpolation(.none)
+                                                .scaledToFit()
+                                                .frame(width: 40, height: 40)
+                                                .background(
+                                                    selectedFlower == key
+                                                        ? Color.white.opacity(0.2)
+                                                        : Color.clear
+                                                )
+                                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                                            Text(name)
+                                                .font(.pixel(9))
+                                                .foregroundColor(.white.opacity(0.7))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .padding(16)
+                        .background(Color.black.opacity(0.7))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, h * 0.15)
+                    }
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
 
                 // Top bar
                 HStack {
@@ -95,6 +160,18 @@ struct TimerView: View {
                                         .background(Color.black.opacity(0.4))
                                         .clipShape(RoundedRectangle(cornerRadius: 4))
                                     }
+                                    .contextMenu {
+                                        Button {
+                                            editingGoal = goal
+                                        } label: {
+                                            Label("Edit", systemImage: "pencil")
+                                        }
+                                        Button(role: .destructive) {
+                                            modelContext.delete(goal)
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    }
                                 }
                             }
                             .padding(.horizontal)
@@ -135,6 +212,9 @@ struct TimerView: View {
         .sheet(isPresented: $showAddGoal) {
             AddGoalView()
         }
+        .sheet(item: $editingGoal) { goal in
+            AddGoalView(editGoal: goal)
+        }
         .onDisappear {
             timer?.invalidate()
             timer = nil
@@ -144,6 +224,7 @@ struct TimerView: View {
     private func startTimer() {
         if selectedGoal == nil && !goals.isEmpty { return }
         isRunning = true
+        showFlowerPicker = false
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             timeElapsed += 1
         }

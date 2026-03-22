@@ -13,53 +13,84 @@ struct MarketView: View {
     @State private var showPurchaseAnimation = false
 
     private let categories = [
-        ("flower", "Flowers"),
+        ("flower", "Seeds"),
         ("tree", "Trees"),
         ("decoration", "Decor"),
-        ("animal", "Animals")
+        ("animal", "Pets")
     ]
 
     var body: some View {
         ZStack {
-            Color(hex: "3E2723").ignoresSafeArea()
+            // Dark wood background
+            Color(hex: "2A1810").ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Header
+                // Shop sign header
+                VStack(spacing: 4) {
+                    Image("panel_wood")
+                        .resizable()
+                        .interpolation(.none)
+                        .frame(height: 50)
+                        .overlay {
+                            Text("Shop")
+                                .font(.pixelBold(20))
+                                .foregroundColor(Color(hex: "FFD700"))
+                                .shadow(color: .black, radius: 2, x: 1, y: 1)
+                        }
+                }
+                .padding(.horizontal)
+                .padding(.top, 60)
+
+                // Coin balance
                 HStack {
-                    Text("Market")
-                        .font(.pixelBold(18))
-                        .foregroundColor(.white)
                     Spacer()
                     CoinDisplay(amount: wallet?.coins ?? 0)
                 }
                 .padding(.horizontal)
-                .padding(.top, 70)
-                .padding(.bottom, 16)
+                .padding(.top, 8)
+                .padding(.bottom, 8)
 
-                // Category tabs
-                HStack(spacing: 0) {
+                // Category shelf tabs
+                HStack(spacing: 8) {
                     ForEach(categories, id: \.0) { key, label in
                         Button {
                             selectedCategory = key
                         } label: {
                             Text(label)
-                                .font(.pixel(11))
-                                .foregroundColor(selectedCategory == key ? .white : .white.opacity(0.4))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 10)
-                                .background(selectedCategory == key ? Color.white.opacity(0.15) : Color.clear)
+                                .font(.pixelBold(11))
+                                .foregroundColor(selectedCategory == key ? Color(hex: "FFD700") : .white.opacity(0.4))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .background(
+                                    selectedCategory == key
+                                        ? Color(hex: "5C3A1E")
+                                        : Color(hex: "3D2415")
+                                )
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .stroke(
+                                            selectedCategory == key ? Color(hex: "8B6914") : Color.clear,
+                                            lineWidth: 1
+                                        )
+                                )
                         }
                     }
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 12)
 
-                // Items grid
+                // Shelf divider
+                Rectangle()
+                    .fill(Color(hex: "5C3A1E"))
+                    .frame(height: 3)
+                    .padding(.horizontal)
+
+                // Items on shelves
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 4) {
                         ForEach(ShopItem.forCategory(selectedCategory)) { item in
-                            MarketItemCard(
+                            ShelfItemCard(
                                 item: item,
                                 canAfford: (wallet?.coins ?? 0) >= item.price,
                                 owned: gardenItems.filter({ $0.itemName == item.name }).count
@@ -68,7 +99,8 @@ struct MarketView: View {
                             }
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 8)
+                    .padding(.top, 8)
                     .padding(.bottom, 100)
                 }
             }
@@ -85,9 +117,13 @@ struct MarketView: View {
                         .font(.pixelBold(14))
                         .foregroundColor(Color(hex: "FFD700"))
                 }
-                .padding(20)
-                .background(Color.black.opacity(0.8))
+                .padding(24)
+                .background(Color(hex: "2A1810").opacity(0.95))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color(hex: "8B6914"), lineWidth: 2)
+                )
                 .transition(.scale.combined(with: .opacity))
             }
         }
@@ -105,7 +141,7 @@ struct MarketView: View {
             itemName: item.name,
             category: item.category,
             positionX: Double.random(in: 40...300),
-            positionY: Double.random(in: 100...500)
+            positionY: Double.random(in: 150...500)
         )
         modelContext.insert(gardenItem)
 
@@ -121,51 +157,56 @@ struct MarketView: View {
     }
 }
 
-struct MarketItemCard: View {
+struct ShelfItemCard: View {
     let item: ShopItem
     let canAfford: Bool
     let owned: Int
     let onBuy: () -> Void
 
     var body: some View {
-        VStack(spacing: 8) {
-            Image(item.previewAsset)
-                .resizable()
-                .interpolation(.none)
-                .scaledToFit()
-                .frame(width: 56, height: 56)
+        Button(action: onBuy) {
+            VStack(spacing: 6) {
+                // Item on shelf
+                Image(item.previewAsset)
+                    .resizable()
+                    .interpolation(.none)
+                    .scaledToFit()
+                    .frame(width: 44, height: 44)
 
-            Text(item.displayName)
-                .font(.pixel(11))
-                .foregroundColor(.white)
-
-            if owned > 0 {
-                Text("owned: \(owned)")
+                Text(item.displayName)
                     .font(.pixel(9))
-                    .foregroundColor(.white.opacity(0.4))
-            }
+                    .foregroundColor(.white.opacity(0.8))
+                    .lineLimit(1)
 
-            Button(action: onBuy) {
-                HStack(spacing: 4) {
+                // Price tag
+                HStack(spacing: 2) {
                     Image("coin")
                         .resizable()
                         .interpolation(.none)
-                        .frame(width: 14, height: 14)
+                        .frame(width: 12, height: 12)
                     Text("\(item.price)")
-                        .font(.pixelBold(12))
+                        .font(.pixelBold(10))
                         .foregroundColor(canAfford ? Color(hex: "FFD700") : .gray)
                 }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(canAfford ? Color.white.opacity(0.15) : Color.white.opacity(0.05))
-                .clipShape(RoundedRectangle(cornerRadius: 4))
+
+                if owned > 0 {
+                    Text("x\(owned)")
+                        .font(.pixel(8))
+                        .foregroundColor(.white.opacity(0.3))
+                }
             }
-            .disabled(!canAfford)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .padding(.horizontal, 4)
+            .background(Color(hex: "3D2415"))
+            .clipShape(RoundedRectangle(cornerRadius: 4))
+            .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color(hex: "5C3A1E"), lineWidth: 1)
+            )
         }
-        .padding(12)
-        .frame(maxWidth: .infinity)
-        .background(Color.white.opacity(0.08))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .disabled(!canAfford)
+        .opacity(canAfford ? 1.0 : 0.5)
     }
 }
 
