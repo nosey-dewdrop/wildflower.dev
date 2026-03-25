@@ -11,6 +11,15 @@ struct MarketView: View {
     @State private var selectedCategory = "flower"
     @State private var purchasedItem: ShopItem?
     @State private var showPurchaseAnimation = false
+    @State private var ownedCounts: [String: Int] = [:]
+
+    private func recomputeOwnedCounts() {
+        var counts: [String: Int] = [:]
+        for item in gardenItems {
+            counts[item.itemName, default: 0] += 1
+        }
+        ownedCounts = counts
+    }
 
     private let categories = [
         ("flower", "Seeds"),
@@ -93,7 +102,7 @@ struct MarketView: View {
                             ShelfItemCard(
                                 item: item,
                                 canAfford: (wallet?.coins ?? 0) >= item.price,
-                                owned: gardenItems.filter({ $0.itemName == item.name }).count
+                                owned: ownedCounts[item.name] ?? 0
                             ) {
                                 buyItem(item)
                             }
@@ -105,7 +114,7 @@ struct MarketView: View {
                 }
             }
 
-            // Purchase feedback
+            // Purchase feedback — MUST be after main content
             if showPurchaseAnimation, let item = purchasedItem {
                 VStack(spacing: 8) {
                     Image(item.previewAsset)
@@ -126,6 +135,12 @@ struct MarketView: View {
                 )
                 .transition(.scale.combined(with: .opacity))
             }
+        }
+        .onAppear {
+            recomputeOwnedCounts()
+        }
+        .onChange(of: gardenItems.count) {
+            recomputeOwnedCounts()
         }
     }
 

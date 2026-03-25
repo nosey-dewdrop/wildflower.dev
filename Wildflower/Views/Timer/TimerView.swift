@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct TimerView: View {
     @Environment(\.modelContext) private var modelContext
@@ -17,6 +18,10 @@ struct TimerView: View {
     @State private var showFlowerPicker = false
     @State private var selectedFlower = "daisy"
     @State private var editingGoal: Goal?
+    @State private var cachedFlowerAsset: String = "daisy_seed"
+    @State private var cachedFlowerAssetExists: Bool = false
+    @State private var cachedFormattedTime: String = "00:00"
+    @State private var cachedStage: Int = 0
 
     private let flowerTypes = [
         ("daisy", "Daisy"),
@@ -28,25 +33,37 @@ struct TimerView: View {
 
     private static let stageSuffixes = ["_seed", "_sprout", "_bud", "_bloom"]
 
-    private var currentFlowerAsset: String {
-        let index = min(stageForTime, Self.stageSuffixes.count - 1)
-        return "\(selectedFlower)\(Self.stageSuffixes[index])"
+    // Precomputed minute:second labels to avoid String(format:) in body
+    private static let timeLabels: [String] = (0..<7200).map {
+        String(format: "%02d:%02d", $0 / 60, $0 % 60)
     }
 
-    private var stageForTime: Int {
+    private func updateFlowerAsset() {
+        let stage: Int
         switch timeElapsed {
-        case 0..<60: return 0
-        case 60..<300: return 1
-        case 300..<900: return 2
-        default: return 3
+        case 0..<60: stage = 0
+        case 60..<300: stage = 1
+        case 300..<900: stage = 2
+        default: stage = 3
+        }
+        let index = min(stage, Self.stageSuffixes.count - 1)
+        let asset = "\(selectedFlower)\(Self.stageSuffixes[index])"
+        if asset != cachedFlowerAsset || stage != cachedStage {
+            cachedFlowerAsset = asset
+            cachedFlowerAssetExists = UIImage(named: asset) != nil
+            cachedStage = stage
+        }
+    }
+
+    private func updateFormattedTime() {
+        if timeElapsed < Self.timeLabels.count {
+            cachedFormattedTime = Self.timeLabels[timeElapsed]
+        } else {
+            cachedFormattedTime = String(format: "%02d:%02d", timeElapsed / 60, timeElapsed % 60)
         }
     }
 
     private var coinsEarned: Int { timeElapsed / 60 }
-
-    private var formattedTime: String {
-        String(format: "%02d:%02d", timeElapsed / 60, timeElapsed % 60)
-    }
 
     var body: some View {
         GeometryReader { geo in
@@ -59,8 +76,8 @@ struct TimerView: View {
 
                 // Flower - tap to change type
                 Group {
-                    if UIImage(named: currentFlowerAsset) != nil {
-                        Image(currentFlowerAsset)
+                    if cachedFlowerAssetExists {
+                        Image(cachedFlowerAsset)
                             .resizable()
                             .interpolation(.none)
                     } else {
@@ -72,7 +89,7 @@ struct TimerView: View {
                     .scaledToFit()
                     .frame(width: 180, height: 180)
                     .scaleEffect(1.2)
-                    .animation(.spring(response: 0.6), value: stageForTime)
+                    .animation(.spring(response: 0.6), value: cachedStage)
                     .animation(.spring(response: 0.4), value: selectedFlower)
                     .position(x: w / 2, y: h * 0.655)
                     .onTapGesture {
@@ -146,7 +163,7 @@ struct TimerView: View {
                 .padding(.top, 75)
 
                 // Timer in sky
-                Text(formattedTime)
+                Text(cachedFormattedTime)
                     .font(.pixelBold(44))
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.6), radius: 4, x: 2, y: 2)
@@ -245,6 +262,17 @@ struct TimerView: View {
         }
         .sheet(item: $editingGoal) { goal in
             AddGoalView(editGoal: goal)
+        }
+        .onAppear {
+            updateFlowerAsset()
+            updateFormattedTime()
+        }
+        .onChange(of: timeElapsed) {
+            updateFormattedTime()
+            updateFlowerAsset()
+        }
+        .onChange(of: selectedFlower) {
+            updateFlowerAsset()
         }
         .onDisappear {
             timer?.invalidate()
