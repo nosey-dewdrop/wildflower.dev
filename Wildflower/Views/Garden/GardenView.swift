@@ -75,6 +75,7 @@ struct GardenView: View {
                                     // Clamp to screen bounds
                                     item.positionX = max(30, min(geo.size.width - 30, item.positionX))
                                     item.positionY = max(100, min(geo.size.height - 80, item.positionY))
+                                    try? modelContext.save()
                                     dragOffset = .zero
                                     draggedItem = nil
                                 }

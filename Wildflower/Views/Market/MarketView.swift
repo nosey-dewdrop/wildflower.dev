@@ -149,7 +149,8 @@ struct MarketView: View {
         withAnimation(.spring(response: 0.4)) {
             showPurchaseAnimation = true
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+        Task {
+            try? await Task.sleep(for: .seconds(1.2))
             withAnimation {
                 showPurchaseAnimation = false
             }

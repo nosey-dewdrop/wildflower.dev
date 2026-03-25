@@ -26,10 +26,11 @@ struct TimerView: View {
         ("lavender", "Lavender"),
     ]
 
+    private static let stageSuffixes = ["_seed", "_sprout", "_bud", "_bloom"]
+
     private var currentFlowerAsset: String {
-        let stages = ["\(selectedFlower)_seed", "\(selectedFlower)_sprout", "\(selectedFlower)_bud", "\(selectedFlower)_bloom"]
-        let index = min(stageForTime, stages.count - 1)
-        return stages[index]
+        let index = min(stageForTime, Self.stageSuffixes.count - 1)
+        return "\(selectedFlower)\(Self.stageSuffixes[index])"
     }
 
     private var stageForTime: Int {
@@ -57,9 +58,17 @@ struct TimerView: View {
                 TimerSceneView()
 
                 // Flower - tap to change type
-                Image(currentFlowerAsset)
-                    .resizable()
-                    .interpolation(.none)
+                Group {
+                    if UIImage(named: currentFlowerAsset) != nil {
+                        Image(currentFlowerAsset)
+                            .resizable()
+                            .interpolation(.none)
+                    } else {
+                        Image(systemName: "leaf.fill")
+                            .resizable()
+                            .foregroundColor(.green)
+                    }
+                }
                     .scaledToFit()
                     .frame(width: 180, height: 180)
                     .scaleEffect(1.2)
@@ -347,20 +356,28 @@ struct SessionHistoryView: View {
 struct SessionRow: View {
     let session: Session
 
+    private static let dateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "d MMM"
+        return f
+    }()
+
+    private static let timeFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm"
+        return f
+    }()
+
     private var minutesDuration: Int {
         session.duration / 60
     }
 
     private var dateString: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM"
-        return formatter.string(from: session.startedAt)
+        Self.dateFormatter.string(from: session.startedAt)
     }
 
     private var timeString: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter.string(from: session.startedAt)
+        Self.timeFormatter.string(from: session.startedAt)
     }
 
     var body: some View {
